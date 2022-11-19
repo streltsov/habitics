@@ -19,3 +19,5 @@ export interface ToDoType extends MetaData {
 }
 
 export type IdType = Pick<ToDoType, "id">;
+
+export type ToDoIdType = Pick<ToDoType, "id">;

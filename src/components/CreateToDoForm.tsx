@@ -1,9 +1,7 @@
 import { useState, FC, FormEvent } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import { ToDoType } from "../types";
 
 const extractTags = (string: string) =>
@@ -40,14 +38,10 @@ export const CreateToDoForm: FC<CreateToDoFormProps> = ({ onCreateToDo }) => {
             fullWidth
             size="small"
             value={title}
+            placeholder="Go to a grocery #routine @today"
             onChange={({ target }) => setTitle(target.value)}
           />
         </CardContent>
-        <CardActions>
-          <Button sx={{ marginLeft: "auto" }} type="submit" size="small">
-            Create Task
-          </Button>
-        </CardActions>
       </form>
     </Card>
   );

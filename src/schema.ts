@@ -1,4 +1,10 @@
-export const todoSchema = {
+import {
+  toTypedRxJsonSchema,
+  ExtractDocumentTypeFromTypedRxJsonSchema,
+  RxJsonSchema,
+} from "rxdb";
+
+export const toDoSchemaLiteral = {
   version: 0,
   primaryKey: "id",
   type: "object",
@@ -29,7 +35,6 @@ export const todoSchema = {
           },
         },
       },
-      default: [],
     },
     dueDate: {
       type: "string",
@@ -55,5 +60,22 @@ export const todoSchema = {
       format: "date-time",
     },
   },
-  required: ["title", "isDone", "id", "createdAt", "updatedAt"],
-};
+  required: [
+    "id",
+    "isDone",
+    "title",
+    "dueDate",
+    "subToDos",
+    "tags",
+    "createdAt",
+    "updatedAt",
+  ],
+} as const;
+
+export const toDoSchema: RxJsonSchema<ToDoDocType> = toDoSchemaLiteral;
+
+const schemaTyped = toTypedRxJsonSchema(toDoSchemaLiteral);
+export type ToDoDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
+  typeof schemaTyped
+>;
+export type SubToDoType = ToDoDocType["subToDos"][number];

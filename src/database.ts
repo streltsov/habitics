@@ -3,9 +3,9 @@ import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import { createRxDatabase, addRxPlugin, RxDatabase } from "rxdb";
 import pouchdbAdapterIdb from "pouchdb-adapter-idb";
-import { todoSchema } from "./schema";
+import { ToDoDocType, toDoSchema } from "./schema";
 import { removeRxDatabase } from "rxdb";
-import { RxCollection, RxJsonSchema, RxDocument } from "rxdb";
+import { RxCollection } from "rxdb";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 
 addRxPlugin(RxDBUpdatePlugin);
@@ -13,13 +13,19 @@ addPouchPlugin(pouchdbAdapterIdb);
 addRxPlugin(RxDBLeaderElectionPlugin);
 addRxPlugin(RxDBReplicationCouchDBPlugin);
 
-let dbPromise: RxDatabase<any> | null = null;
+type ToDosColection = RxCollection<ToDoDocType>;
+
+type DatabaseCollections = {
+  toDos: ToDosColection;
+};
+
+let dbPromise: Promise<RxDatabase<DatabaseCollections>> | null = null;
 
 const _create = async () => {
-  // removeRxDatabase("habitics", getRxStoragePouch("idb"));
+  // removeRxDatabase("habistics", getRxStoragePouch("idb"));
 
-  const db = await createRxDatabase({
-    name: "habitics",
+  const db = await createRxDatabase<DatabaseCollections>({
+    name: "habistics",
     storage: getRxStoragePouch("idb"),
   });
 
@@ -28,8 +34,8 @@ const _create = async () => {
   });
 
   await db.addCollections({
-    todos: {
-      schema: todoSchema,
+    toDos: {
+      schema: toDoSchema,
     },
   });
 
