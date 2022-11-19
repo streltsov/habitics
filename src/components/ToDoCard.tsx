@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { EditToDoCard } from "./EditToDoCard";
 import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import Stack from "@mui/material/Stack";
+import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
@@ -18,7 +21,7 @@ interface ToDoCardProps {
 
 export const ToDoCard = ({ toDo }: ToDoCardProps) => {
   const [isEditToDoModalVisible, setIsEditToDoModalVisible] = useState(false);
-  const { id, isDone, title, description, subToDos, tags } = toDo;
+  const { id, isDone, title, description, subToDos, points, tags } = toDo;
   const { setIsDone } = useToDo(id);
 
   return (
@@ -39,14 +42,30 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
           <ToDoCardMenu id={id} />
         </Box>
 
-        <CardContent>
-          {description && (
-            <Typography variant="body2">{description}</Typography>
-          )}
-          <SubToDos id={id} subToDos={subToDos} />
-        </CardContent>
+        {Boolean(description || subToDos.length) && (
+          <CardContent>
+            {description && (
+              <Typography
+                variant="caption"
+                style={{ display: "inline-block", whiteSpace: "pre-line" }}
+              >
+                {description}
+              </Typography>
+            )}
+            <SubToDos id={id} subToDos={subToDos} />
+          </CardContent>
+        )}
 
-        <Tags tags={tags} />
+        <Stack
+          direction="row"
+          spacing={1}
+          margin={1}
+          justifyContent="space-between"
+          alignItems="flex-end"
+        >
+          <Rating value={points} max={points} size="small" readOnly />
+          <Tags tags={tags} />
+        </Stack>
       </Card>
       <Modal
         open={isEditToDoModalVisible}

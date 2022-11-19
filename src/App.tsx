@@ -1,14 +1,22 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
+import Rating from "@mui/material/Rating";
 import { Column } from "./components/Column";
 import { CreateToDoForm } from "./components/CreateToDoForm";
 import { ToDoCard } from "./components/ToDoCard";
 import { isToday, isTomorrow } from "date-fns";
 import { useToDos } from "./hooks/useToDo";
+import { useState } from "react";
+import { Stack } from "@mui/material";
 
 export function App() {
   const { toDos, createToDo } = useToDos();
+
+  const points = toDos
+    .filter(({ isDone }) => Boolean(isDone))
+    .filter(({ dueDate }) => isToday(new Date(dueDate)))
+    .reduce((a, b) => a + b.points, 0);
 
   return (
     <>
@@ -57,7 +65,15 @@ export function App() {
           </Grid>
           <Grid xs={3}>
             <Column>
-              <Typography variant="h6">Done</Typography>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="h6">Done</Typography>
+                <Rating
+                  value={points / 2}
+                  precision={0.5}
+                  size="large"
+                  max={Math.ceil(points / 2)}
+                />
+              </Stack>
               {toDos
                 .filter(({ isDone }) => Boolean(isDone))
                 .filter(({ dueDate }) => isToday(new Date(dueDate)))

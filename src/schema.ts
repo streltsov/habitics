@@ -40,6 +40,9 @@ export const toDoSchemaLiteral = {
       type: "string",
       format: "date-time",
     },
+    points: {
+      type: "number",
+    },
     tags: {
       type: "array",
       uniqueItems: true,
@@ -66,6 +69,7 @@ export const toDoSchemaLiteral = {
     "title",
     "dueDate",
     "subToDos",
+    "points",
     "tags",
     "createdAt",
     "updatedAt",

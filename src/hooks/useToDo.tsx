@@ -31,6 +31,7 @@ export const useToDos = () => {
       title,
       dueDate: String(MAX_DATE),
       subToDos: [],
+      points: 1,
       tags,
       ...metaData,
     });
@@ -68,19 +69,30 @@ export const useToDo = (id: string) => {
     const db = await get();
     const toDo = db.toDos.findOne({ selector: { id } });
 
-    return toDo.update({ $set: { subToDos: data } });
+    return toDo.update({ $push: { subToDos: data } });
   };
 
-  const updateSubToDo = (idx: number) => async (data: Partial<SubToDoType>) => {
-    const db = await get();
-    const toDo = db.toDos.findOne({ selector: { id } });
+  const setSubToDoIsDone =
+    (idx: number) => async (isDone: SubToDoType["isDone"]) => {
+      const db = await get();
+      const toDo = db.toDos.findOne({ selector: { id } });
 
-    toDo.update({
-      // Hack, because positional operator .$. doesn't work
-      // $set: { ["subToDos.1.isDone"]: subToDo.isDone },
-      $set: { ["subToDos." + idx + ".isDone"]: data },
-    });
-  };
+      toDo.update({
+        // Hack, because positional operator .$. doesn't work
+        $set: { ["subToDos." + idx + ".isDone"]: isDone },
+      });
+    };
+
+  const setSubToDoTitle =
+    (idx: number) => async (title: SubToDoType["title"]) => {
+      const db = await get();
+      const toDo = db.toDos.findOne({ selector: { id } });
+
+      toDo.update({
+        // Hack, because positional operator .$. doesn't work
+        $set: { ["subToDos." + idx + ".title"]: title },
+      });
+    };
 
   const setDueDate = async (dueDate: Date) => {
     const db = await get();
@@ -109,7 +121,7 @@ export const useToDo = (id: string) => {
     setTitle,
     setDescription,
     createSubToDo,
-    updateSubToDo,
+    setSubToDoIsDone,
     setDueDate,
     unsetDueDate,
     deleteToDo,

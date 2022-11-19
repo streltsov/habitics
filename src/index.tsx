@@ -8,7 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 const theme = createTheme({
   // spacing: 2,
   palette: {
-    mode: "light",
+    mode: "dark",
   },
   components: {
     //    MuiChip: {

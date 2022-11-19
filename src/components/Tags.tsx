@@ -6,11 +6,11 @@ export const Tags = ({ tags }: { tags: string[] }) => {
   if (!tags.length) return null;
 
   return (
-    <Stack direction="row" spacing={1} margin={1} justifyContent="flex-end">
+    <>
       {tags.map((tag) => (
         <Tag key={tag} size="small" label={"#" + tag} />
       ))}
-    </Stack>
+    </>
   );
 };
 
