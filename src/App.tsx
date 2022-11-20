@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import { Column } from "./components/Column";
@@ -9,8 +11,16 @@ import { isToday, isTomorrow } from "date-fns";
 import { useToDos } from "./hooks/useToDo";
 import { useState } from "react";
 import { Stack } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export function App() {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const theme = createTheme({
+    palette: {
+      mode: prefersDarkMode ? "dark" : "light",
+    },
+  });
+
   const { toDos, createToDo } = useToDos();
 
   const points = toDos
@@ -19,7 +29,7 @@ export function App() {
     .reduce((a, b) => a + b.points, 0);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box sx={{ margin: "8px", flexGrow: 1 }}>
         <Grid container xs={12} spacing={1}>
           <Grid xs={3}>
@@ -84,6 +94,7 @@ export function App() {
           </Grid>
         </Grid>
       </Box>
-    </>
+      <CssBaseline />
+    </ThemeProvider>
   );
 }

@@ -63,7 +63,12 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
           justifyContent="space-between"
           alignItems="flex-end"
         >
-          <Rating value={points} max={points} size="small" readOnly />
+          <Rating
+            value={points}
+            max={Math.ceil(points)}
+            size="small"
+            readOnly
+          />
           <Tags tags={tags} />
         </Stack>
       </Card>
