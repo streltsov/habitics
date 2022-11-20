@@ -9,7 +9,6 @@ import { CreateToDoForm } from "./components/CreateToDoForm";
 import { ToDoCard } from "./components/ToDoCard";
 import { isToday, isTomorrow } from "date-fns";
 import { useToDos } from "./hooks/useToDo";
-import { useState } from "react";
 import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 

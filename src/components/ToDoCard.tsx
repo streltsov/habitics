@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { EditToDoCard } from "./EditToDoCard";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";

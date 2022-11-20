@@ -3,8 +3,12 @@ import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { RxDBUpdatePlugin } from "rxdb/plugins/update";
 import { createRxDatabase, addRxPlugin, RxDatabase } from "rxdb";
 import pouchdbAdapterIdb from "pouchdb-adapter-idb";
-import { ToDoDocType, toDoSchema } from "./schema";
-import { removeRxDatabase } from "rxdb";
+import {
+  ToDoDocType,
+  toDoSchema,
+  accumulatorTaskSchema,
+  accumulatorHistorySchema,
+} from "./schema";
 import { RxCollection } from "rxdb";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 
@@ -22,8 +26,6 @@ type DatabaseCollections = {
 let dbPromise: Promise<RxDatabase<DatabaseCollections>> | null = null;
 
 const _create = async () => {
-  // removeRxDatabase("habistics", getRxStoragePouch("idb"));
-
   const db = await createRxDatabase<DatabaseCollections>({
     name: "habistics",
     storage: getRxStoragePouch("idb"),
@@ -36,6 +38,12 @@ const _create = async () => {
   await db.addCollections({
     toDos: {
       schema: toDoSchema,
+    },
+    accumulatorTasks: {
+      schema: accumulatorTaskSchema,
+    },
+    accumulatorHistories: {
+      schema: accumulatorHistorySchema,
     },
   });
 

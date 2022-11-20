@@ -122,6 +122,7 @@ export const useToDo = (id: string) => {
     setDescription,
     createSubToDo,
     setSubToDoIsDone,
+    setSubToDoTitle,
     setDueDate,
     unsetDueDate,
     deleteToDo,

@@ -19,11 +19,7 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
 
   if (!toDo) return null;
 
-  const { isDone, title, description, subToDos, tags } = toDo;
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
+  const { title, description, subToDos } = toDo;
 
   const handleCreateSubToDo = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

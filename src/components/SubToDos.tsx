@@ -1,8 +1,6 @@
-import { FormEvent, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
 import { SubToDoType } from "../schema";
 import { useToDo } from "../hooks/useToDo";
 
