@@ -116,6 +116,13 @@ export const useToDo = (id: string) => {
     return toDo.update({ $set: { tags } });
   };
 
+  const setPoints = async (points: ToDoDocType["points"]) => {
+    const db = await get();
+    const toDo = db.toDos.findOne({ selector: { id } });
+
+    return toDo.update({ $set: { points } });
+  };
+
   const deleteToDo = async () => {
     const db = await get();
     const toDo = db.toDos.findOne({ selector: { id } });
@@ -133,6 +140,7 @@ export const useToDo = (id: string) => {
     setDueDate,
     unsetDueDate,
     setTags,
+    setPoints,
     deleteToDo,
   };
 };

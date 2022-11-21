@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { ToDoDocType } from "../schema";
 import { useToDos, useToDo } from "../hooks/useToDo";
+import Rating from "@mui/material/Rating";
 
 import Autocomplete from "@mui/material/Autocomplete";
 
@@ -16,8 +17,14 @@ interface EditToDoCardProps {
 export const EditToDoCard = ({ id }: EditToDoCardProps) => {
   const [newSubToDoTitle, setNewSubToDoTitle] = useState("");
   const toDo = useToDos().toDos.find((toDo) => toDo.id == id);
-  const { setTitle, setDescription, createSubToDo, setSubToDoIsDone, setTags } =
-    useToDo(id);
+  const {
+    setTitle,
+    setDescription,
+    createSubToDo,
+    setSubToDoIsDone,
+    setTags,
+    setPoints,
+  } = useToDo(id);
 
   if (!toDo) return null;
 
@@ -36,6 +43,13 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
 
   return (
     <Card sx={style}>
+      <Box ml="auto" mb={1}>
+        <Rating
+          onChange={(_, points) => setPoints(points || 0)}
+          defaultValue={toDo.points}
+          size="large"
+        />
+      </Box>
       <Box mb={2}>
         <TextField
           fullWidth

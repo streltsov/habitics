@@ -21,7 +21,7 @@ interface ToDoCardProps {
 export const ToDoCard = ({ toDo }: ToDoCardProps) => {
   const [isEditToDoModalVisible, setIsEditToDoModalVisible] = useState(false);
   const { id, isDone, title, description, subToDos, points, tags } = toDo;
-  const { setIsDone } = useToDo(id);
+  const { setIsDone, setPoints } = useToDo(id);
 
   return (
     <>
@@ -64,9 +64,9 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
         >
           <Rating
             value={points}
-            max={Math.ceil(points)}
+            max={5}
+            onChange={(_, points) => setPoints(points || 0)}
             size="small"
-            readOnly
           />
           <Tags tags={tags} />
         </Stack>
