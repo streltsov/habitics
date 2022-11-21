@@ -109,6 +109,13 @@ export const useToDo = (id: string) => {
     return toDo.update({ $set: { dueDate: undefined } });
   };
 
+  const setTags = async (tags: ToDoDocType["tags"]) => {
+    const db = await get();
+    const toDo = db.toDos.findOne({ selector: { id } });
+
+    return toDo.update({ $set: { tags } });
+  };
+
   const deleteToDo = async () => {
     const db = await get();
     const toDo = db.toDos.findOne({ selector: { id } });
@@ -125,6 +132,7 @@ export const useToDo = (id: string) => {
     setSubToDoTitle,
     setDueDate,
     unsetDueDate,
+    setTags,
     deleteToDo,
   };
 };

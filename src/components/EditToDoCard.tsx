@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import { ToDoDocType } from "../schema";
 import { useToDos, useToDo } from "../hooks/useToDo";
 
+import Autocomplete from "@mui/material/Autocomplete";
+
 interface EditToDoCardProps {
   id: ToDoDocType["id"];
 }
@@ -14,7 +16,7 @@ interface EditToDoCardProps {
 export const EditToDoCard = ({ id }: EditToDoCardProps) => {
   const [newSubToDoTitle, setNewSubToDoTitle] = useState("");
   const toDo = useToDos().toDos.find((toDo) => toDo.id == id);
-  const { setTitle, setDescription, createSubToDo, setSubToDoIsDone } =
+  const { setTitle, setDescription, createSubToDo, setSubToDoIsDone, setTags } =
     useToDo(id);
 
   if (!toDo) return null;
@@ -80,6 +82,16 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
             onChange={(event) => setNewSubToDoTitle(event.target.value)}
           />
         </form>
+      </Box>
+      <Box mt={4}>
+        <Autocomplete
+          multiple
+          freeSolo
+          options={[]}
+          defaultValue={toDo.tags}
+          onChange={(_, tags) => setTags(tags.flat())}
+          renderInput={(params) => <TextField variant="standard" {...params} />}
+        />
       </Box>
     </Card>
   );

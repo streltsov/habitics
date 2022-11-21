@@ -13,7 +13,7 @@ export const Tags = ({ tags }: { tags: string[] }) => {
   );
 };
 
-const Tag = styled(Chip)(({ theme }) => ({
+export const Tag = styled(Chip)(({ theme }) => ({
   "background": "none",
   "color": theme.palette.text.secondary,
   "& .MuiChip-label": {
