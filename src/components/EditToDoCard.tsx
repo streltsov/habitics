@@ -52,21 +52,23 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
       </Box>
       <Box mb={2}>
         <TextField
+          size="small"
           fullWidth
           label="Title"
-          variant="standard"
+          variant="outlined"
           defaultValue={title}
           onChange={(event) => setTitle(event.target.value)}
         />
       </Box>
-      <Box mb={2}>
+      <Box mb={4}>
         <TextField
           fullWidth
+          size="small"
           label="Description"
           multiline
           rows={3}
           defaultValue={description}
-          variant="standard"
+          variant="outlined"
           onChange={(event) => setDescription(event.target.value)}
         />
       </Box>
@@ -86,13 +88,15 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
         );
       })}
 
-      <Box ml={1}>
+      <Box>
         <form onSubmit={handleCreateSubToDo}>
           <TextField
+            fullWidth
             name="title"
             size="small"
-            variant="standard"
+            variant="outlined"
             value={newSubToDoTitle}
+            label="Add sub ToDo"
             onChange={(event) => setNewSubToDoTitle(event.target.value)}
           />
         </form>
@@ -101,10 +105,13 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
         <Autocomplete
           multiple
           freeSolo
+          size="small"
           options={[]}
           defaultValue={toDo.tags}
           onChange={(_, tags) => setTags(tags.flat())}
-          renderInput={(params) => <TextField variant="standard" {...params} />}
+          renderInput={(params) => (
+            <TextField label="Tags" variant="outlined" {...params} />
+          )}
         />
       </Box>
     </Card>

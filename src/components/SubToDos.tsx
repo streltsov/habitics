@@ -18,13 +18,12 @@ export const SubToDos = ({ subToDos, id }: SubToDosProps) => {
         return (
           <Box key={subToDo.id} display="flex" alignItems="center">
             <Checkbox
+              sx={{ padding: "2px 4px " }}
               size="small"
               checked={subToDo.isDone}
               onChange={(_, isDone) => setSubToDoIsDone(idx)(isDone)}
             />
-            <Typography noWrap variant="subtitle2">
-              {subToDo.title}
-            </Typography>
+            <Typography variant="caption">{subToDo.title}</Typography>
           </Box>
         );
       })}

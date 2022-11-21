@@ -42,7 +42,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
         </Box>
 
         {Boolean(description || subToDos.length) && (
-          <CardContent>
+          <CardContent sx={{ padding: "4px 16px" }}>
             {description && (
               <Typography
                 variant="caption"
