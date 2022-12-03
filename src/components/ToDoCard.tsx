@@ -13,6 +13,7 @@ import { useToDo } from "../hooks/useToDo";
 import { ToDoCardMenu } from "./ToDoCardMenu";
 import { ToDoDocType } from "../schema";
 import { SubToDos } from "./SubToDos";
+import ReactMarkdown from "react-markdown";
 
 interface ToDoCardProps {
   toDo: ToDoDocType;
@@ -43,14 +44,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
 
         {Boolean(description || subToDos.length) && (
           <CardContent sx={{ padding: "4px 16px" }}>
-            {description && (
-              <Typography
-                variant="caption"
-                style={{ display: "inline-block", whiteSpace: "pre-line" }}
-              >
-                {description}
-              </Typography>
-            )}
+            {description && <ReactMarkdown>{description}</ReactMarkdown>}
             <SubToDos id={id} subToDos={subToDos} />
           </CardContent>
         )}
