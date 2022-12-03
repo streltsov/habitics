@@ -23,7 +23,12 @@ export const SubToDos = ({ subToDos, id }: SubToDosProps) => {
               checked={subToDo.isDone}
               onChange={(_, isDone) => setSubToDoIsDone(idx)(isDone)}
             />
-            <Typography variant="caption">{subToDo.title}</Typography>
+            <Typography
+              sx={{ textDecoration: subToDo.isDone ? "line-through" : "none" }}
+              variant="caption"
+            >
+              {subToDo.title}
+            </Typography>
           </Box>
         );
       })}
