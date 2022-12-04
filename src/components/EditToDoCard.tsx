@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import Typography from "@mui/material/Typography";
+import ClearIcon from "@mui/icons-material/Clear";
 import Checkbox from "@mui/material/Checkbox";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
@@ -22,6 +23,7 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
     setDescription,
     createSubToDo,
     setSubToDoIsDone,
+    setSubToDos,
     setTags,
     setPoints,
   } = useToDo(id);
@@ -39,6 +41,10 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
       isDone: false,
     });
     setNewSubToDoTitle("");
+  };
+
+  const handleDeleteSubToDo = (id: string) => {
+    setSubToDos(subToDos.filter((subToDo) => subToDo.id != id));
   };
 
   return (
@@ -75,20 +81,30 @@ export const EditToDoCard = ({ id }: EditToDoCardProps) => {
 
       {subToDos.map((subToDo, idx) => {
         return (
-          <Box key={subToDo.id} display="flex" alignItems="center">
+          <Box
+            key={subToDo.id}
+            display="flex"
+            alignItems="center"
+            justifyItems="space-between"
+          >
             <Checkbox
               size="small"
+              sx={{ padding: "2px 4px " }}
               checked={subToDo.isDone}
               onChange={(_, isDone) => setSubToDoIsDone(idx)(isDone)}
             />
             <Typography noWrap variant="subtitle2">
               {subToDo.title}
             </Typography>
+            <ClearIcon
+              sx={{ marginLeft: "auto" }}
+              onClick={() => handleDeleteSubToDo(subToDo.id as string)}
+            />
           </Box>
         );
       })}
 
-      <Box>
+      <Box mt={2}>
         <form onSubmit={handleCreateSubToDo}>
           <TextField
             fullWidth

@@ -72,6 +72,13 @@ export const useToDo = (id: string) => {
     return toDo.update({ $push: { subToDos: data } });
   };
 
+  const setSubToDos = async (subToDos: ToDoDocType["subToDos"]) => {
+    const db = await get();
+    const toDo = db.toDos.findOne({ selector: { id } });
+
+    return toDo.update({ $set: { subToDos } });
+  };
+
   const setSubToDoIsDone =
     (idx: number) => async (isDone: SubToDoType["isDone"]) => {
       const db = await get();
@@ -135,6 +142,7 @@ export const useToDo = (id: string) => {
     setTitle,
     setDescription,
     createSubToDo,
+    setSubToDos,
     setSubToDoIsDone,
     setSubToDoTitle,
     setDueDate,
