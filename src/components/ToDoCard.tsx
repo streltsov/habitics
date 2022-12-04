@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { EditToDoCard } from "./EditToDoCard";
 import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
-import Rating from "@mui/material/Rating";
 import Modal from "@mui/material/Modal";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
@@ -14,6 +12,7 @@ import { ToDoCardMenu } from "./ToDoCardMenu";
 import { ToDoDocType } from "../schema";
 import { SubToDos } from "./SubToDos";
 import ReactMarkdown from "react-markdown";
+import { Stack } from "@mui/material";
 
 interface ToDoCardProps {
   toDo: ToDoDocType;
@@ -21,8 +20,8 @@ interface ToDoCardProps {
 
 export const ToDoCard = ({ toDo }: ToDoCardProps) => {
   const [isEditToDoModalVisible, setIsEditToDoModalVisible] = useState(false);
-  const { id, isDone, title, description, subToDos, points, tags } = toDo;
-  const { setIsDone, setPoints } = useToDo(id);
+  const { id, isDone, title, description, subToDos, tags } = toDo;
+  const { setIsDone } = useToDo(id);
 
   return (
     <>
@@ -49,19 +48,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
           </CardContent>
         )}
 
-        <Stack
-          direction="row"
-          spacing={1}
-          margin={1}
-          justifyContent="space-between"
-          alignItems="flex-end"
-        >
-          <Rating
-            value={points}
-            max={5}
-            onChange={(_, points) => setPoints(points || 0)}
-            size="small"
-          />
+        <Stack flexDirection="row-reverse" padding={1}>
           <Tags tags={tags} />
         </Stack>
       </Card>
@@ -69,7 +56,9 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
         open={isEditToDoModalVisible}
         onClose={() => setIsEditToDoModalVisible(false)}
       >
-        <EditToDoCard id={id} />
+        <>
+          <EditToDoCard id={id} />
+        </>
       </Modal>
     </>
   );

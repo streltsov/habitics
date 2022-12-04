@@ -65,6 +65,13 @@ export const useToDo = (id: string) => {
     return toDo.update({ $set: { description } });
   };
 
+  const setPriority = async (priority: ToDoDocType["priority"]) => {
+    const db = await get();
+    const toDo = db.toDos.findOne({ selector: { id } });
+
+    return toDo.update({ $set: { priority } });
+  };
+
   const createSubToDo = async (data: SubToDoType) => {
     const db = await get();
     const toDo = db.toDos.findOne({ selector: { id } });
@@ -141,6 +148,7 @@ export const useToDo = (id: string) => {
     setIsDone,
     setTitle,
     setDescription,
+    setPriority,
     createSubToDo,
     setSubToDos,
     setSubToDoIsDone,
