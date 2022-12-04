@@ -5,7 +5,7 @@ import {
 } from "rxdb";
 
 export const toDoSchemaLiteral = {
-  version: 0,
+  version: 1,
   primaryKey: "id",
   type: "object",
   properties: {

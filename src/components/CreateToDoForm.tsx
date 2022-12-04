@@ -30,7 +30,7 @@ export const CreateToDoForm: FC<CreateToDoFormProps> = ({ onCreateToDo }) => {
   };
 
   return (
-    <Card>
+    <Card sx={{ flex: "1 0 fit-content" }}>
       <form onSubmit={handleFormSubmit}>
         <CardContent>
           <TextField

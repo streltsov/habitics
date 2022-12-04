@@ -25,7 +25,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
 
   return (
     <>
-      <Card>
+      <Card style={{ flex: "1 0 fit-content" }}>
         <Box display="flex" alignItems="center">
           <Checkbox
             checked={isDone}

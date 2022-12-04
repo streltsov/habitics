@@ -29,7 +29,7 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ margin: "8px", flexGrow: 1 }}>
+      <Box sx={{ flex: 1, width: "100%" }}>
         <Grid container xs={12} spacing={1}>
           <Grid xs={3}>
             <Column>

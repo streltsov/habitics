@@ -12,6 +12,9 @@ import {
 import { RxCollection } from "rxdb";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 
+import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
+
+addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBUpdatePlugin);
 addPouchPlugin(pouchdbAdapterIdb);
 addRxPlugin(RxDBLeaderElectionPlugin);
@@ -38,6 +41,12 @@ const _create = async () => {
   await db.addCollections({
     toDos: {
       schema: toDoSchema,
+      migrationStrategies: {
+        1: function (oldDoc) {
+          oldDoc.priority = 0;
+          return oldDoc;
+        },
+      },
     },
     accumulatorTasks: {
       schema: accumulatorTaskSchema,
