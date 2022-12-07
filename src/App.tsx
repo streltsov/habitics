@@ -3,7 +3,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import Rating from "@mui/material/Rating";
 import { Column } from "./components/Column";
 import { CreateToDoForm } from "./components/CreateToDoForm";
 import { ToDoCard } from "./components/ToDoCard";
@@ -21,11 +20,6 @@ export function App() {
   });
 
   const { toDos, createToDo } = useToDos();
-
-  const points = toDos
-    .filter(({ isDone }) => Boolean(isDone))
-    .filter(({ dueDate }) => isToday(new Date(dueDate)))
-    .reduce((a, b) => a + b.points, 0);
 
   return (
     <ThemeProvider theme={theme}>
@@ -76,12 +70,6 @@ export function App() {
             <Column>
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="h6">Done</Typography>
-                <Rating
-                  value={points / 2}
-                  precision={0.5}
-                  size="large"
-                  max={Math.ceil(points / 2)}
-                />
               </Stack>
               {toDos
                 .filter(({ isDone }) => Boolean(isDone))
