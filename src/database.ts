@@ -24,11 +24,12 @@ addRxPlugin(RxDBReplicationCouchDBPlugin);
 
 type ToDosColection = RxCollection<ToDoDocType>;
 type HabitsCollection = RxCollection<HabitDocType>;
+type HabitContributionsCollection = RxCollection<HabitContributionDocType>;
 
 type DatabaseCollections = {
   toDos: ToDosColection;
   habits: HabitsCollection;
-  habitContributions: HabitContributionDocType;
+  habitContributions: HabitContributionsCollection;
 };
 
 let dbPromise: Promise<RxDatabase<DatabaseCollections>> | null = null;
@@ -58,6 +59,9 @@ const _create = async () => {
     },
     habitContributions: {
       schema: habitContributionSchema,
+      migrationStrategies: {
+        1: (oldDoc) => oldDoc,
+      },
     },
   });
 

@@ -66,9 +66,9 @@ export function App() {
         <Button onClick={() => setIsCreateHabitModalVisible(true)}>
           Create a Habit
         </Button>
-        {habits.map((habit) => {
-          return <Habit key={habit.id} habit={habit} />;
-        })}
+        {habits.map((habit) => (
+          <Habit key={habit.id} habit={habit} />
+        ))}
         <Modal
           open={isCreateHabitModalVisible}
           onClose={() => setIsCreateHabitModalVisible(false)}

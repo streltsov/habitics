@@ -1,5 +1,6 @@
 import { Card, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
+import { useHabitContribution } from "../hooks/useHabit";
 import { HabitDocType } from "../schema";
 
 interface HabitProps {
@@ -9,8 +10,13 @@ interface HabitProps {
 export const Habit = ({ habit }: HabitProps) => {
   const [amount, setAmount] = useState(0);
 
+  const { habitContributions, createHabitContribution } = useHabitContribution(
+    habit.id
+  );
+
   const handleContribute = () => {
-    console.log({ amount });
+    createHabitContribution({ amount });
+    setAmount(0);
   };
 
   return (
@@ -24,6 +30,7 @@ export const Habit = ({ habit }: HabitProps) => {
         value={amount}
       />
       <Button onClick={handleContribute}>Contribute</Button>
+      {JSON.stringify(habitContributions)}
     </Card>
   );
 };

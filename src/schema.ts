@@ -136,7 +136,7 @@ export type HabitDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
 >;
 
 export const habitContributionSchemaLiteral = {
-  version: 0,
+  version: 1,
   primaryKey: "id",
   type: "object",
   properties: {
@@ -156,7 +156,7 @@ export const habitContributionSchemaLiteral = {
       type: "string",
     },
   },
-  required: ["id", "parentId", "description", "amount", "createdAt"],
+  required: ["id", "parentId", "amount", "createdAt"],
 } as const;
 
 export const habitContributionSchema: RxJsonSchema<HabitContributionDocType> =
