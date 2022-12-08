@@ -135,31 +135,36 @@ export type HabitDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
   typeof habitSchemaTyped
 >;
 
-export const accumulatorHistorySchemaLiteral = {
+export const habitContributionSchemaLiteral = {
   version: 0,
-  primaryKey: "timestamp",
+  primaryKey: "id",
   type: "object",
   properties: {
+    id: {
+      type: "string",
+    },
     parentId: {
+      type: "string",
+    },
+    description: {
       type: "string",
     },
     amount: {
       type: "number",
     },
-    timestamp: {
+    createdAt: {
       type: "string",
     },
   },
-  required: ["parentId", "amount", "timestamp"],
+  required: ["id", "parentId", "description", "amount", "createdAt"],
 } as const;
 
-export const accumulatorHistorySchema: RxJsonSchema<AccumulatorHistoryDocType> =
-  accumulatorHistorySchemaLiteral;
+export const habitContributionSchema: RxJsonSchema<HabitContributionDocType> =
+  habitContributionSchemaLiteral;
 
-const accumulatorHistorySchemaTyped = toTypedRxJsonSchema(
-  accumulatorHistorySchemaLiteral
+const habitContributionSchemaTyped = toTypedRxJsonSchema(
+  habitContributionSchemaLiteral
 );
-export type AccumulatorHistoryDocType =
-  ExtractDocumentTypeFromTypedRxJsonSchema<
-    typeof accumulatorHistorySchemaTyped
-  >;
+export type HabitContributionDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
+  typeof habitContributionSchemaTyped
+>;

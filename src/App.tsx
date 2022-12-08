@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import { Habit } from "./components/Habit";
 import Grid from "@mui/material/Unstable_Grid2";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -16,6 +17,7 @@ import Tab from "@mui/material/Tab";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import { CreateHabitForm } from "./components/CreateHabitForm";
+import { useHabit } from "./hooks/useHabit";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,6 +48,8 @@ export function App() {
   const [isCreateHabitModalVisible, setIsCreateHabitModalVisible] =
     useState(false);
 
+  const { habits } = useHabit();
+
   return (
     <>
       <Box>
@@ -62,11 +66,16 @@ export function App() {
         <Button onClick={() => setIsCreateHabitModalVisible(true)}>
           Create a Habit
         </Button>
+        {habits.map((habit) => {
+          return <Habit key={habit.id} habit={habit} />;
+        })}
         <Modal
           open={isCreateHabitModalVisible}
           onClose={() => setIsCreateHabitModalVisible(false)}
         >
-          <CreateHabitForm />
+          <>
+            <CreateHabitForm />
+          </>
         </Modal>
       </TabPanel>
 

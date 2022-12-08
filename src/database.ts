@@ -8,7 +8,8 @@ import {
   toDoSchema,
   HabitDocType,
   habitSchema,
-  accumulatorHistorySchema,
+  habitContributionSchema,
+  HabitContributionDocType,
 } from "./schema";
 import { RxCollection } from "rxdb";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
@@ -27,6 +28,7 @@ type HabitsCollection = RxCollection<HabitDocType>;
 type DatabaseCollections = {
   toDos: ToDosColection;
   habits: HabitsCollection;
+  habitContributions: HabitContributionDocType;
 };
 
 let dbPromise: Promise<RxDatabase<DatabaseCollections>> | null = null;
@@ -54,8 +56,8 @@ const _create = async () => {
     habits: {
       schema: habitSchema,
     },
-    accumulatorHistories: {
-      schema: accumulatorHistorySchema,
+    habitContributions: {
+      schema: habitContributionSchema,
     },
   });
 
