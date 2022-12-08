@@ -6,7 +6,8 @@ import pouchdbAdapterIdb from "pouchdb-adapter-idb";
 import {
   ToDoDocType,
   toDoSchema,
-  accumulatorTaskSchema,
+  HabitDocType,
+  habitSchema,
   accumulatorHistorySchema,
 } from "./schema";
 import { RxCollection } from "rxdb";
@@ -21,9 +22,11 @@ addRxPlugin(RxDBLeaderElectionPlugin);
 addRxPlugin(RxDBReplicationCouchDBPlugin);
 
 type ToDosColection = RxCollection<ToDoDocType>;
+type HabitsCollection = RxCollection<HabitDocType>;
 
 type DatabaseCollections = {
   toDos: ToDosColection;
+  habits: HabitsCollection;
 };
 
 let dbPromise: Promise<RxDatabase<DatabaseCollections>> | null = null;
@@ -48,8 +51,8 @@ const _create = async () => {
         },
       },
     },
-    accumulatorTasks: {
-      schema: accumulatorTaskSchema,
+    habits: {
+      schema: habitSchema,
     },
     accumulatorHistories: {
       schema: accumulatorHistorySchema,

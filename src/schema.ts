@@ -87,7 +87,7 @@ export type ToDoDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
 >;
 export type SubToDoType = ToDoDocType["subToDos"][number];
 
-export const accumulatorTaskSchemaLiteral = {
+export const habitSchemaLiteral = {
   version: 0,
   primaryKey: "id",
   type: "object",
@@ -98,6 +98,7 @@ export const accumulatorTaskSchemaLiteral = {
     description: {
       type: "string",
     },
+
     tags: {
       type: "array",
       uniqueItems: true,
@@ -124,17 +125,14 @@ export const accumulatorTaskSchemaLiteral = {
       format: "date-time",
     },
   },
-  required: ["id", "title", "tags", "createdAt", "updatedAt"],
+  required: ["id", "title", "tags", "createdAt"],
 } as const;
 
-export const accumulatorTaskSchema: RxJsonSchema<AccumulatorTaskDocType> =
-  accumulatorTaskSchemaLiteral;
+export const habitSchema: RxJsonSchema<HabitDocType> = habitSchemaLiteral;
 
-const accumulatorTaskSchemaTyped = toTypedRxJsonSchema(
-  accumulatorTaskSchemaLiteral
-);
-export type AccumulatorTaskDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
-  typeof accumulatorTaskSchemaTyped
+const habitSchemaTyped = toTypedRxJsonSchema(habitSchemaLiteral);
+export type HabitDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
+  typeof habitSchemaTyped
 >;
 
 export const accumulatorHistorySchemaLiteral = {
