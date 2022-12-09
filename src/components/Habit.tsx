@@ -1,10 +1,18 @@
-import { Card, Typography, TextField, Button, Box } from "@mui/material";
+import {
+  Card,
+  TextField,
+  Button,
+  CardHeader,
+  CardContent,
+  Stack,
+} from "@mui/material";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import { useState } from "react";
 import { useHabitContribution } from "../hooks/useHabit";
 import { HabitDocType } from "../schema";
-import { compareAsc } from "date-fns";
+import { compareAsc, subYears } from "date-fns";
+import "./Habit.css";
 
 interface HabitProps {
   habit: HabitDocType;
@@ -53,21 +61,38 @@ export const Habit = ({ habit }: HabitProps) => {
   }
 
   return (
-    <Card key={habit.id}>
-      <Typography variant="h6">{habit.title}</Typography>
-      <Box height="100px" width="400px">
-        <CalendarHeatmap values={mergeSortedContributions(sorted)} />
-      </Box>
-      <Box sx={{ mt: 4, mb: 4 }}>
-        <TextField
-          size="small"
-          label="Amount"
-          type="number"
-          onChange={({ target }) => setAmount(Number(target.value))}
-          value={amount}
+    <Card>
+      <CardHeader title={habit.title} />
+      <CardContent>
+        <CalendarHeatmap
+          startDate={subYears(new Date(), 1)}
+          gutterSize={4}
+          values={mergeSortedContributions(sorted)}
+          classForValue={(value) => {
+            if (!value) return "color-empty";
+
+            if (value.count < 15) return `color-scale-1`;
+            if (value.count < 25) return `color-scale-2`;
+            if (value.count < 75) return `color-scale-3`;
+            if (value.count < 115) return `color-scale-4`;
+            if (value.count > 115) return `color-scale-5`;
+          }}
         />
-        <Button onClick={handleContribute}>Contribute</Button>
-      </Box>
+        <Stack
+          flexDirection="row"
+          justifyContent="space-around"
+          sx={{ mt: 4, mb: 4 }}
+        >
+          <TextField
+            size="small"
+            label="Amount"
+            type="number"
+            onChange={({ target }) => setAmount(Number(target.value))}
+            value={amount}
+          />
+          <Button onClick={handleContribute}>Contribute</Button>
+        </Stack>
+      </CardContent>
     </Card>
   );
 };

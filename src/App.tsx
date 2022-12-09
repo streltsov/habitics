@@ -53,11 +53,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <Box>
-        <Tabs
-          value={tab}
-          onChange={(_, n) => setTab(n)}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={tab} onChange={(_, n) => setTab(n)}>
           <Tab label="ToDo's" />
           <Tab label="Habits" />
         </Tabs>
@@ -66,9 +62,13 @@ export function App() {
         <Button onClick={() => setIsCreateHabitModalVisible(true)}>
           Create a Habit
         </Button>
-        {habits.map((habit) => (
-          <Habit key={habit.id} habit={habit} />
-        ))}
+        <Grid container spacing={{ xs: 2, md: 2 }} justifyContent="center">
+          {habits.map((habit) => (
+            <Grid xs={12} sm={10} md={6} lg={4} xl={4} key={habit.id}>
+              <Habit habit={habit} />
+            </Grid>
+          ))}
+        </Grid>
         <Modal
           open={isCreateHabitModalVisible}
           onClose={() => setIsCreateHabitModalVisible(false)}
