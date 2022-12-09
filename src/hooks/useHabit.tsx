@@ -41,7 +41,11 @@ export const useHabitContribution = (
   useEffect(() => {
     (async () => {
       const db = await get();
-      db.habitContributions.find().$.subscribe(setHabitContributions);
+      db.habitContributions
+        .find()
+        .where("parentId")
+        .eq(parentId)
+        .$.subscribe(setHabitContributions);
     })();
   }, []);
 

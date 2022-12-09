@@ -15,7 +15,9 @@ import { RxCollection } from "rxdb";
 import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
+import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 
+addRxPlugin(RxDBQueryBuilderPlugin);
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBUpdatePlugin);
 addPouchPlugin(pouchdbAdapterIdb);

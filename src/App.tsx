@@ -51,7 +51,7 @@ export function App() {
   const { habits } = useHabit();
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Box>
         <Tabs
           value={tab}
@@ -79,69 +79,67 @@ export function App() {
         </Modal>
       </TabPanel>
 
-      <ThemeProvider theme={theme}>
-        <TabPanel value={tab} index={0}>
-          <Box sx={{ flex: 1, width: "100%" }}>
-            <Grid container xs={12} spacing={1}>
-              <Grid xs={3}>
-                <Column>
-                  <Typography variant="h6">Backlog</Typography>
-                  <CreateToDoForm onCreateToDo={createToDo} />
-                  {toDos
-                    .filter(({ isDone }) => Boolean(!isDone))
-                    .filter(
-                      ({ dueDate }) =>
-                        !(
-                          isToday(new Date(dueDate)) ||
-                          isTomorrow(new Date(dueDate))
-                        )
-                    )
-                    .map((todo) => (
-                      <ToDoCard key={todo.id} toDo={todo} />
-                    ))}
-                </Column>
-              </Grid>
-
-              <Grid xs={3}>
-                <Column>
-                  <Typography variant="h6">Tomorrow</Typography>
-                  {toDos
-                    .filter(({ isDone }) => Boolean(!isDone))
-                    .filter(({ dueDate }) => isTomorrow(new Date(dueDate)))
-                    .map((toDo) => (
-                      <ToDoCard key={toDo.id} toDo={toDo} />
-                    ))}
-                </Column>
-              </Grid>
-              <Grid xs={3}>
-                <Column>
-                  <Typography variant="h6">Today</Typography>
-                  {toDos
-                    .filter(({ isDone }) => Boolean(!isDone))
-                    .filter(({ dueDate }) => isToday(new Date(dueDate)))
-                    .map((toDo) => (
-                      <ToDoCard key={toDo.id} toDo={toDo} />
-                    ))}
-                </Column>
-              </Grid>
-              <Grid xs={3}>
-                <Column>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography variant="h6">Done</Typography>
-                  </Stack>
-                  {toDos
-                    .filter(({ isDone }) => Boolean(isDone))
-                    .filter(({ dueDate }) => isToday(new Date(dueDate)))
-                    .map((toDo) => (
-                      <ToDoCard key={toDo.id} toDo={toDo} />
-                    ))}
-                </Column>
-              </Grid>
+      <TabPanel value={tab} index={0}>
+        <Box sx={{ flex: 1, width: "100%" }}>
+          <Grid container xs={12} spacing={1}>
+            <Grid xs={3}>
+              <Column>
+                <Typography variant="h6">Backlog</Typography>
+                <CreateToDoForm onCreateToDo={createToDo} />
+                {toDos
+                  .filter(({ isDone }) => Boolean(!isDone))
+                  .filter(
+                    ({ dueDate }) =>
+                      !(
+                        isToday(new Date(dueDate)) ||
+                        isTomorrow(new Date(dueDate))
+                      )
+                  )
+                  .map((todo) => (
+                    <ToDoCard key={todo.id} toDo={todo} />
+                  ))}
+              </Column>
             </Grid>
-          </Box>
-        </TabPanel>
-        <CssBaseline />
-      </ThemeProvider>
-    </>
+
+            <Grid xs={3}>
+              <Column>
+                <Typography variant="h6">Tomorrow</Typography>
+                {toDos
+                  .filter(({ isDone }) => Boolean(!isDone))
+                  .filter(({ dueDate }) => isTomorrow(new Date(dueDate)))
+                  .map((toDo) => (
+                    <ToDoCard key={toDo.id} toDo={toDo} />
+                  ))}
+              </Column>
+            </Grid>
+            <Grid xs={3}>
+              <Column>
+                <Typography variant="h6">Today</Typography>
+                {toDos
+                  .filter(({ isDone }) => Boolean(!isDone))
+                  .filter(({ dueDate }) => isToday(new Date(dueDate)))
+                  .map((toDo) => (
+                    <ToDoCard key={toDo.id} toDo={toDo} />
+                  ))}
+              </Column>
+            </Grid>
+            <Grid xs={3}>
+              <Column>
+                <Stack direction="row" justifyContent="space-between">
+                  <Typography variant="h6">Done</Typography>
+                </Stack>
+                {toDos
+                  .filter(({ isDone }) => Boolean(isDone))
+                  .filter(({ dueDate }) => isToday(new Date(dueDate)))
+                  .map((toDo) => (
+                    <ToDoCard key={toDo.id} toDo={toDo} />
+                  ))}
+              </Column>
+            </Grid>
+          </Grid>
+        </Box>
+      </TabPanel>
+      <CssBaseline />
+    </ThemeProvider>
   );
 }
