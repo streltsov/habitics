@@ -8,7 +8,7 @@ import Modal from "@mui/material/Modal";
 import { Column } from "./components/Column";
 import { CreateToDoForm } from "./components/CreateToDoForm";
 import { ToDoCard } from "./components/ToDoCard";
-import { isToday, isTomorrow } from "date-fns";
+import { format, isToday, isTomorrow } from "date-fns";
 import { useToDos } from "./hooks/useToDo";
 import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -18,6 +18,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { CreateHabitForm } from "./components/CreateHabitForm";
 import { useHabit } from "./hooks/useHabit";
+import { get } from "./database";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -50,6 +51,18 @@ export function App() {
 
   const { habits } = useHabit();
 
+  const handleExportJson = async () => {
+    const db = await get();
+    const json = await db.exportJSON();
+    const date = format(new Date(), "MM-dd-yyyy.H-m");
+
+    const a = document.createElement("a");
+    const file = new Blob([JSON.stringify(json)], { type: "application/json" });
+    a.href = URL.createObjectURL(file);
+    a.download = `db-snapshot-${date}.json`;
+    a.click();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -59,9 +72,12 @@ export function App() {
         </Tabs>
       </Box>
       <TabPanel value={tab} index={1}>
-        <Button onClick={() => setIsCreateHabitModalVisible(true)}>
-          Create a Habit
-        </Button>
+        <Stack>
+          <Button onClick={() => setIsCreateHabitModalVisible(true)}>
+            Create a Habit
+          </Button>
+          <Button onClick={handleExportJson}>Export JSON</Button>
+        </Stack>
         <Grid container spacing={{ xs: 2, md: 2 }} justifyContent="center">
           {habits.map((habit) => (
             <Grid xs={12} sm={10} md={6} lg={4} xl={4} key={habit.id}>

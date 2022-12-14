@@ -16,7 +16,9 @@ import { RxDBReplicationCouchDBPlugin } from "rxdb/plugins/replication-couchdb";
 
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
+import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
 
+addRxPlugin(RxDBJsonDumpPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBUpdatePlugin);
