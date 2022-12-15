@@ -63,6 +63,26 @@ export function App() {
     a.click();
   };
 
+  const handleUpload = async (event: any) => {
+    const db = await get();
+    printFile(event.target.files[0]);
+
+    function printFile(file: any) {
+      const reader = new FileReader();
+
+      reader.onload = async function (evt) {
+        const json = evt.target?.result;
+        console.log("JSON: ", json);
+
+        // await db.remove();
+        db.importJSON(JSON.parse(json as string))
+          .then(console.log)
+          .catch(console.error);
+      };
+      reader.readAsText(file);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -77,6 +97,10 @@ export function App() {
             Create a Habit
           </Button>
           <Button onClick={handleExportJson}>Export JSON</Button>
+          <Button variant="contained" component="label">
+            Import JSON
+            <input hidden accept=".json" type="file" onChange={handleUpload} />
+          </Button>
         </Stack>
         <Grid container spacing={{ xs: 2, md: 2 }} justifyContent="center">
           {habits.map((habit) => (
