@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EditToDoCard } from "./EditToDoCard";
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 import CardContent from "@mui/material/CardContent";
@@ -25,7 +26,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
 
   return (
     <>
-      <Card style={{ flex: "1 0 fit-content" }}>
+      <StyledCard>
         <Box display="flex" alignItems="center">
           <Checkbox
             checked={isDone}
@@ -51,7 +52,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
         <Stack flexDirection="row-reverse" padding={1}>
           <Tags tags={tags} />
         </Stack>
-      </Card>
+      </StyledCard>
       <Modal
         open={isEditToDoModalVisible}
         onClose={() => setIsEditToDoModalVisible(false)}
@@ -63,3 +64,7 @@ export const ToDoCard = ({ toDo }: ToDoCardProps) => {
     </>
   );
 };
+
+const StyledCard = styled(Card)`
+  flex: 0 0 fit-content;
+`;

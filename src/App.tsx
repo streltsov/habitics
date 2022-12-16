@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 import { Habit } from "./components/Habit";
 import Grid from "@mui/material/Unstable_Grid2";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,6 +19,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 import { CreateHabitForm } from "./components/CreateHabitForm";
 import { useHabit } from "./hooks/useHabit";
+import AppBar from "@mui/material/AppBar";
 import { get } from "./database";
 
 interface TabPanelProps {
@@ -85,12 +87,17 @@ export function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box>
-        <Tabs value={tab} onChange={(_, n) => setTab(n)}>
-          <Tab label="ToDo's" />
-          <Tab label="Habits" />
-        </Tabs>
-      </Box>
+      <AppBar position="fixed">
+        <Toolbar variant="dense">
+          <Tabs value={tab} onChange={(_, n) => setTab(n)}>
+            <Tab label="ToDo's" />
+            <Tab label="Habits" />
+          </Tabs>
+          <Box ml={2}>
+            <CreateToDoForm onCreateToDo={createToDo} />
+          </Box>
+        </Toolbar>
+      </AppBar>
       <TabPanel value={tab} index={1}>
         <Stack>
           <Button onClick={() => setIsCreateHabitModalVisible(true)}>
@@ -125,7 +132,6 @@ export function App() {
             <Grid xs={3}>
               <Column>
                 <Typography variant="h6">Backlog</Typography>
-                <CreateToDoForm onCreateToDo={createToDo} />
                 {toDos
                   .filter(({ isDone }) => Boolean(!isDone))
                   .filter(
