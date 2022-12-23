@@ -19,20 +19,21 @@ interface HabitProps {
 }
 
 export const Habit = ({ habit }: HabitProps) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | undefined>(undefined);
 
   const { habitContributions, createHabitContribution } = useHabitContribution(
     habit.id
   );
 
   const handleContribute = () => {
+    if (!amount) return;
     if (amount === 0) return;
     if (amount < 0) {
       alert("You want to contribute negative value. It is not possible");
     }
 
     createHabitContribution({ amount });
-    setAmount(0);
+    setAmount(undefined);
   };
 
   const sorted = habitContributions
