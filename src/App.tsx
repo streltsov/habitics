@@ -9,7 +9,7 @@ import Modal from "@mui/material/Modal";
 import { Column } from "./components/Column";
 import { CreateToDoForm } from "./components/CreateToDoForm";
 import { ToDoCard } from "./components/ToDoCard";
-import { format, isToday, isTomorrow } from "date-fns";
+import { format, isThisWeek, isToday } from "date-fns";
 import { useToDos } from "./hooks/useToDo";
 import { Stack } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -134,13 +134,7 @@ export function App() {
                 <Typography variant="h6">Backlog</Typography>
                 {toDos
                   .filter(({ isDone }) => Boolean(!isDone))
-                  .filter(
-                    ({ dueDate }) =>
-                      !(
-                        isToday(new Date(dueDate)) ||
-                        isTomorrow(new Date(dueDate))
-                      )
-                  )
+                  .filter(({ dueDate }) => !isThisWeek(new Date(dueDate)))
                   .map((todo) => (
                     <ToDoCard key={todo.id} toDo={todo} />
                   ))}
@@ -149,10 +143,11 @@ export function App() {
 
             <Grid xs={3}>
               <Column>
-                <Typography variant="h6">Tomorrow</Typography>
+                <Typography variant="h6">This Week</Typography>
                 {toDos
                   .filter(({ isDone }) => Boolean(!isDone))
-                  .filter(({ dueDate }) => isTomorrow(new Date(dueDate)))
+                  .filter(({ dueDate }) => isThisWeek(new Date(dueDate)))
+                  .filter(({ dueDate }) => !isToday(new Date(dueDate)))
                   .map((toDo) => (
                     <ToDoCard key={toDo.id} toDo={toDo} />
                   ))}
