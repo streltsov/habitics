@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { MAX_DATE } from "../constants";
 import { SubToDoType } from "../schema";
 
 import { get } from "../database";
 import { ToDoDocType } from "../schema";
+import { formatRFC3339 } from "date-fns";
+
+export type CreateToDoType = Pick<ToDoDocType, "title" | "dueDate" | "tags">;
 
 export const useToDos = () => {
   const [toDos, setToDos] = useState<ToDoDocType[]>([]);
@@ -15,9 +17,8 @@ export const useToDos = () => {
     })();
   }, []);
 
-  type CreateToDo = Pick<ToDoDocType, "title" | "tags">;
-  const createToDo = async ({ title, tags }: CreateToDo) => {
-    const timestamp = String(Date.now());
+  const createToDo = async ({ title, tags, dueDate }: CreateToDoType) => {
+    const timestamp = formatRFC3339(new Date());
 
     const metaData = {
       id: timestamp,
@@ -29,7 +30,7 @@ export const useToDos = () => {
     return db.toDos.insert({
       isDone: false,
       title,
-      dueDate: String(MAX_DATE),
+      dueDate,
       subToDos: [],
       points: 1,
       tags,

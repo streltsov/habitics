@@ -14,7 +14,7 @@ export interface ToDoType extends MetaData {
   title: string;
   tags: string[];
   isDone: boolean;
-  dueDate: Date;
+  dueDate: Date | string;
   subToDos: SubToDoType[];
 }
 

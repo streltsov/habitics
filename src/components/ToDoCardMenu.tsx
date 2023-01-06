@@ -10,10 +10,14 @@ import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { endOfToday, endOfTomorrow } from "date-fns";
 import { useToDo } from "../hooks/useToDo";
 import { ToDoDocType } from "../schema";
-import { endOfWeek, addWeeks, formatRFC3339 } from "date-fns";
+import {
+  getEndOfToday,
+  getEndOfTomorrow,
+  getEndOfThisWeek,
+  getEndOfNextWeek,
+} from "../helpers/date";
 
 type ToDoCardMenuProps = Pick<ToDoDocType, "id">;
 
@@ -32,19 +36,19 @@ export const ToDoCardMenu = ({ id }: ToDoCardMenuProps) => {
   const { setDueDate, unsetDueDate, deleteToDo } = useToDo(id);
 
   const handleTodayClick = () => {
-    setDueDate(formatRFC3339(endOfToday()));
+    setDueDate(getEndOfToday());
   };
 
   const handleTomorrowClick = () => {
-    setDueDate(formatRFC3339(endOfTomorrow()));
+    setDueDate(getEndOfTomorrow());
   };
 
   const handleThisWeekClick = () => {
-    setDueDate(formatRFC3339(endOfWeek(new Date())));
+    setDueDate(getEndOfThisWeek());
   };
 
   const handleNextWeekClick = () => {
-    setDueDate(formatRFC3339(endOfWeek(addWeeks(new Date(), 1))));
+    setDueDate(getEndOfNextWeek());
   };
 
   return (
