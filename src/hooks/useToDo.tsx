@@ -108,7 +108,7 @@ export const useToDo = (id: string) => {
       });
     };
 
-  const setDueDate = async (dueDate: Date) => {
+  const setDueDate = async (dueDate: Date | string) => {
     const db = await get();
     const toDo = db.toDos.findOne({ selector: { id } });
 
