@@ -19,7 +19,7 @@ interface HabitProps {
 }
 
 export const Habit = ({ habit }: HabitProps) => {
-  const [amount, setAmount] = useState<number | undefined>(undefined);
+  const [amount, setAmount] = useState<number>(0);
 
   const { habitContributions, createHabitContribution } = useHabitContribution(
     habit.id
@@ -33,7 +33,7 @@ export const Habit = ({ habit }: HabitProps) => {
     }
 
     createHabitContribution({ amount });
-    setAmount(undefined);
+    setAmount(0);
   };
 
   const sorted = habitContributions
@@ -89,7 +89,7 @@ export const Habit = ({ habit }: HabitProps) => {
             label="Amount"
             type="number"
             onChange={({ target }) => setAmount(Number(target.value))}
-            value={amount}
+            value={amount || ""}
           />
           <Button onClick={handleContribute}>Contribute</Button>
         </Stack>
