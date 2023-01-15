@@ -75,7 +75,7 @@ export const Habit = ({ habit }: HabitProps) => {
             if (value.count < 15) return `color-scale-1`;
             if (value.count < 25) return `color-scale-2`;
             if (value.count < 75) return `color-scale-3`;
-            if (value.count < 115) return `color-scale-4`;
+            if (value.count <= 115) return `color-scale-4`;
             if (value.count > 115) return `color-scale-5`;
           }}
         />
