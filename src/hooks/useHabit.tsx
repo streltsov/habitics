@@ -25,9 +25,17 @@ export const useHabit = () => {
     });
   };
 
+  const archiveHabit = async (id: HabitDocType["id"]) => {
+    const db = await get();
+    const habit = db.habits.findOne({ selector: { id } });
+
+    return habit.update({ $set: { isArchived: true } });
+  };
+
   return {
     habits,
     createHabit,
+    archiveHabit,
   };
 };
 

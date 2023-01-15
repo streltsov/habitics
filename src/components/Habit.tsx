@@ -6,6 +6,7 @@ import {
   CardContent,
   Stack,
 } from "@mui/material";
+import { HabitCardMenu } from "../components/HabitCardMenu";
 import CalendarHeatmap from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import { useState } from "react";
@@ -63,7 +64,10 @@ export const Habit = ({ habit }: HabitProps) => {
 
   return (
     <Card>
-      <CardHeader title={habit.title} />
+      <CardHeader
+        title={habit.title}
+        action={<HabitCardMenu id={habit.id} />}
+      />
       <CardContent>
         <CalendarHeatmap
           startDate={subYears(new Date(), 1)}

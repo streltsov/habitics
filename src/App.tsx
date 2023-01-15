@@ -110,11 +110,13 @@ export function App() {
           </Button>
         </Stack>
         <Grid container spacing={{ xs: 2, md: 2 }} justifyContent="center">
-          {habits.map((habit) => (
-            <Grid xs={12} sm={10} md={6} lg={4} xl={4} key={habit.id}>
-              <Habit habit={habit} />
-            </Grid>
-          ))}
+          {habits
+            .filter(({ isArchived }) => !isArchived)
+            .map((habit) => (
+              <Grid xs={12} sm={10} md={6} lg={4} xl={4} key={habit.id}>
+                <Habit habit={habit} />
+              </Grid>
+            ))}
         </Grid>
         <Modal
           open={isCreateHabitModalVisible}
