@@ -60,6 +60,12 @@ const _create = async () => {
     },
     habits: {
       schema: habitSchema,
+      migrationStrategies: {
+        1: (oldDoc) => {
+          oldDoc.isArchived = false;
+          return oldDoc;
+        },
+      },
     },
     habitContributions: {
       schema: habitContributionSchema,

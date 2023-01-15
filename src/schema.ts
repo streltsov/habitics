@@ -88,7 +88,7 @@ export type ToDoDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
 export type SubToDoType = ToDoDocType["subToDos"][number];
 
 export const habitSchemaLiteral = {
-  version: 0,
+  version: 1,
   primaryKey: "id",
   type: "object",
   properties: {
@@ -123,6 +123,10 @@ export const habitSchemaLiteral = {
     updatedAt: {
       type: "string",
       format: "date-time",
+    },
+    isArchived: {
+      type: "boolean",
+      default: false,
     },
   },
   required: ["id", "title", "tags", "createdAt"],
