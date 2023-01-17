@@ -12,7 +12,7 @@ import "react-calendar-heatmap/dist/styles.css";
 import { useState } from "react";
 import { useHabitContribution } from "../hooks/useHabit";
 import { HabitDocType } from "../schema";
-import { compareAsc, subYears } from "date-fns";
+import { compareAsc, isToday, subYears } from "date-fns";
 import "./Habit.css";
 
 interface HabitProps {
@@ -62,8 +62,31 @@ export const Habit = ({ habit }: HabitProps) => {
     return contributions;
   }
 
+  const getClassName = (amountOfContribution: number, className: string) => {
+    null;
+    if (!amountOfContribution) return "card-color-empty";
+
+    if (amountOfContribution < 15) return `${className}-1`;
+    if (amountOfContribution < 25) return `${className}-2`;
+    if (amountOfContribution < 75) return `${className}-3`;
+    if (amountOfContribution <= 115) return `${className}-4`;
+    if (amountOfContribution > 115) return `${className}-5`;
+  };
+
+  console.log(
+    habit.title,
+    mergeSortedContributions(sorted).filter(({ date }) =>
+      isToday(new Date(date))
+    )
+  );
+
+  const todaysContributions: number =
+    mergeSortedContributions(sorted).filter(({ date }) =>
+      isToday(new Date(date))
+    )[0]?.count || 0;
+
   return (
-    <Card>
+    <Card className={getClassName(todaysContributions, "card-color-scale")}>
       <CardHeader
         title={habit.title}
         action={<HabitCardMenu id={habit.id} />}
@@ -73,15 +96,9 @@ export const Habit = ({ habit }: HabitProps) => {
           startDate={subYears(new Date(), 1)}
           gutterSize={4}
           values={mergeSortedContributions(sorted)}
-          classForValue={(value) => {
-            if (!value) return "color-empty";
-
-            if (value.count < 15) return `color-scale-1`;
-            if (value.count < 25) return `color-scale-2`;
-            if (value.count < 75) return `color-scale-3`;
-            if (value.count <= 115) return `color-scale-4`;
-            if (value.count > 115) return `color-scale-5`;
-          }}
+          classForValue={(value) =>
+            getClassName(value?.count || 0, "color-scale")
+          }
         />
         <Stack
           flexDirection="row"
